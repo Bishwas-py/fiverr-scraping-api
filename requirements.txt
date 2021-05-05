@@ -1,0 +1,4 @@
+bs4
+html5lib
+requests
+random-user-agent

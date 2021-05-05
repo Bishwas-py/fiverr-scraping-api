@@ -1,5 +1,3 @@
-from this import s
-
 from bs4 import BeautifulSoup
 import requests
 
@@ -19,7 +17,9 @@ unique_user_agent = False
 
 
 class Scrape:
-
+    """
+    Scape Fiverr data with this function.
+    """
     while not unique_user_agent:
         file = open('last_user_agent.txt', mode='w+')
         if str(user_agent) != str(file.read()):
@@ -62,24 +62,54 @@ class Scrape:
         user_name = seller_overview_html.find("a", {"class":"seller-link"}).text #imp
         rating = seller_overview_html.find("b", {'class':'rating-score'}).text #imp
         ratings_count = seller_overview_html.find("span", {'class':'ratings-count'}).text #imp
+        ratings_count = ratings_count.replace(")",'').replace("(",'') #removing unnecessary brackets
 
-        description = seller_overview_html.find("span", {'class':'description-content'}).text #imp
+        # Getting gig images
+        gig_gallery_component = fiv_soup.find("section", {"class":"gig-gallery-component"})
+        gig_images_list = gig_gallery_component.find_all("img", {'src': True})
+        images = [image['src'] for image in gig_images_list]
+
+        # Getting gig description
+        description = fiv_soup.find("div", {'class':'description-content'}).text #imp
+
+        metadata = fiv_soup.find("div", {"class":"metadata"})
+        
+        metadata_attributes = fiv_soup.find_all("li", {"metadata-attribute"})
+
+        # Getting all the meta data below discription
+        meta_data = dict() # imp
+        for metadata_attribute in metadata_attributes:
+            attribute = metadata_attribute.find("p").text
+            meta_values = metadata_attribute.find("ul").find_all("li")
+
+            values = [value.text for value in meta_values]
+
+            meta_data.update({
+                attribute: values
+            })
+
+        # Getting profile information
+        
+
         cooked_data = {
-            "title": title,
-            "rating": rating,
-            "ratings_count":ratings_count.replace(")",'').replace("(",''),
-            "categories_breadcrumbs": categories_breadcrumbs,
             'user_name':user_name,
+            "title": title,
+            "categories_breadcrumbs": categories_breadcrumbs,
+            "rating": rating,
+            "ratings_count":ratings_count,
+            "images":images,
+            "description":description,
+            "meta_data": meta_data,
         }
 
         data.update(cooked_data)
 
-        print(f"{data}")
+        
+        return data
 
-        return str(response.text)
 
-
+url = "https://www.fiverr.com/tripchoni/make-seo-tools-website-with-49-tools"
 scrapper = Scrape()
-content = scrapper.scrape('https://www.fiverr.com/tripchoni/make-seo-tools-website-with-49-tools')
-f = open('new.html', mode='w+', encoding="utf-8")
-f.write(str(content))
+data = scrapper.scrape(url)
+
+print(f"{data}")
