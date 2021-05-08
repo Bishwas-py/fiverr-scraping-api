@@ -89,8 +89,22 @@ class Scrape:
             })
 
         # Getting profile information
+        seller_card = fiv_soup.find("div", {"class":"seller-card"})
+        seller_bio = seller_card.find("p", {"class":"one-liner"}).text #add this
+        profile_photo = seller_card.find("img")["src"] #add this
         
-
+        user_stats_soups = seller_card.find("ul", {"class":"user-stats"}).find_all("li")
+        user_stats = dict()
+        for stat in user_stats_soups:
+            stat_topic = stat.find(text=True)
+            stat_value = stat.find("strong").text
+            user_stat = {
+                stat_topic:stat_value
+            }
+            user_stats.update(user_stat)
+        
+        print(user_stats)
+        
         cooked_data = {
             'user_name':user_name,
             "title": title,
@@ -108,8 +122,8 @@ class Scrape:
         return data
 
 
-url = "https://www.fiverr.com/tripchoni/make-seo-tools-website-with-49-tools"
+url = "https://www.fiverr.com/rezuan_ahmed/responsive-website-wordpress-website-web-design-redesign-wordpress-blog"
 scrapper = Scrape()
 data = scrapper.scrape(url)
 
-print(f"{data}")
+# print(f"{data}")
