@@ -90,7 +90,10 @@ class Scrape:
 
         # Getting profile information
         seller_card = fiv_soup.find("div", {"class":"seller-card"})
-        seller_bio = seller_card.find("p", {"class":"one-liner"}).text #add this
+        try:
+            seller_bio = seller_card.find("p", {"class":"one-liner"}).text #add this
+        except:
+            seller_bio = None
         profile_photo = seller_card.find("img")["src"] #add this
         
         user_stats_soups = seller_card.find("ul", {"class":"user-stats"}).find_all("li")
@@ -102,9 +105,28 @@ class Scrape:
                 stat_topic:stat_value
             }
             user_stats.update(user_stat)
-        
-        print(user_stats)
-        
+
+        # Getting user discription from  seller card
+        user_discription = seller_card.find("article", {"class":"seller-desc"}).text.replace("+ See More","")
+
+        # Prices Ranges
+        packages_tabs = fiv_soup.find("div", {"class":"packages-tabs triple"})
+        labels = packages_tabs.find_all("label")
+        forms = packages_tabs.find_all("form")
+        for index in range(len(labels)):
+            label = labels[index]
+            form = forms[index]
+            title = form.find_all("b", {"class":"title"}).text
+            price = form.find("b", {"class":"price"}).text
+            discription = form.find("p").text
+            delivery_days = form.find("b", {"class":"delivery"}).text.replace(" Day Delivery","")
+            revisions = form.find("b", {"class":"revisions"}).text.replace(" Revisions","")
+            feature_soups = form.find("ul", {"class":"features"}).find_all("li", {"class":"feature"})
+            features = list()
+            for feature in  feature_soups:
+                features.append(object)
+            
+
         cooked_data = {
             'user_name':user_name,
             "title": title,
@@ -114,16 +136,18 @@ class Scrape:
             "images":images,
             "description":description,
             "meta_data": meta_data,
+            "profile_photo":profile_photo,
+            "user_stats":user_stats,
+            "user_discription":user_discription,
+            
         }
 
         data.update(cooked_data)
-
-        
         return data
 
 
-url = "https://www.fiverr.com/rezuan_ahmed/responsive-website-wordpress-website-web-design-redesign-wordpress-blog"
+url = "https://www.fiverr.com/otem_global/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses"
 scrapper = Scrape()
 data = scrapper.scrape(url)
 
-# print(f"{data}")
+print(f"{data}")
