@@ -94,7 +94,7 @@ class Scrape:
             seller_bio = seller_card.find("p", {"class":"one-liner"}).text #add this
         except:
             seller_bio = None
-        profile_photo = seller_card.find("img")["src"] #add this
+        profile_photo = seller_card.find("img")["src"] #imp
         
         user_stats_soups = seller_card.find("ul", {"class":"user-stats"}).find_all("li")
         user_stats = dict()
@@ -113,19 +113,27 @@ class Scrape:
         packages_tabs = fiv_soup.find("div", {"class":"packages-tabs triple"})
         labels = packages_tabs.find_all("label")
         forms = packages_tabs.find_all("form")
+        price_and_features = dict() #imp
         for index in range(len(labels)):
             label = labels[index]
             form = forms[index]
-            title = form.find_all("b", {"class":"title"}).text
-            price = form.find("b", {"class":"price"}).text
+            title = form.find("b", {"class":"title"}).text
+            price = form.find("span", {"class":"price"}).text
             discription = form.find("p").text
             delivery_days = form.find("b", {"class":"delivery"}).text.replace(" Day Delivery","")
             revisions = form.find("b", {"class":"revisions"}).text.replace(" Revisions","")
             feature_soups = form.find("ul", {"class":"features"}).find_all("li", {"class":"feature"})
-            features = list()
-            for feature in  feature_soups:
-                features.append(object)
-            
+            features = [feature.text for feature in  feature_soups]
+            features_data = {
+                label.text : {
+                    "price": price,
+                    "discription": discription,
+                    "features": features
+                }
+            }
+            price_and_features.update(features_data)
+
+        # Get faq's
 
         cooked_data = {
             'user_name':user_name,
@@ -136,9 +144,11 @@ class Scrape:
             "images":images,
             "description":description,
             "meta_data": meta_data,
+            "seller_bio":seller_bio,
             "profile_photo":profile_photo,
             "user_stats":user_stats,
             "user_discription":user_discription,
+            "price_and_features":price_and_features,
             
         }
 
