@@ -133,7 +133,9 @@ class Scrape:
             }
             price_and_features.update(features_data)
 
-        # Get faq's
+        # Get Tags
+        gig_tags_container = fiv_soup.find("div",{"class":"gig-tags-container"}).find("ul").find_all("li")
+        gig_tags = [tag.text for tag in gig_tags_container]
 
         cooked_data = {
             'user_name':user_name,
@@ -149,6 +151,7 @@ class Scrape:
             "user_stats":user_stats,
             "user_discription":user_discription,
             "price_and_features":price_and_features,
+            "gig_tags":gig_tags
             
         }
 
