@@ -1,9 +1,0 @@
-README.rst
-feedfinder2.py
-setup.cfg
-setup.py
-feedfinder2.egg-info/PKG-INFO
-feedfinder2.egg-info/SOURCES.txt
-feedfinder2.egg-info/dependency_links.txt
-feedfinder2.egg-info/requires.txt
-feedfinder2.egg-info/top_level.txt
