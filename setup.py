@@ -1,9 +1,14 @@
 from setuptools import setup
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+    
 setup(
     name="fiverr-api",
-    version="0.0.1",
+    version="0.0.2",
     description="Fiverr API - This Fiverr scrapping API is capable of getting all the info from a gig in Fiverr.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/Bishwas-py/fiverr-scraping-api",
     author="Bishwas Bhandari",
     author_email="bishwasbh@gmail.com",
@@ -13,7 +18,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
-        "License :: OSI Approved :: GNU GENERAL PUBLIC LICENSE",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent"
     ],
     install_requires = [
