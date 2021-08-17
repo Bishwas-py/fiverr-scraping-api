@@ -1,6 +1,6 @@
-# Foobar
+# Fiverr API - Scrapes Fiverr
 
-Foobar is a Python library for dealing with word pluralization.
+Fiverr API - This Fiverr scrapping API is capable of getting all the info from a gig in Fiverr.
 
 ## Installation
 
@@ -9,6 +9,9 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install fiverr-
 ```bash
 pip install fiverr-api
 ```
+
+## Essential Links
+[GitHub Repo](https://github.com/Bishwas-py/fiverr-scraping-api), [Issue A Bug](https://github.com/Bishwas-py/fiverr-scraping-api/issues) and ask for help in [Webmatrices Forum](http://webmatrices.com/)!
 
 ## Usage
 
