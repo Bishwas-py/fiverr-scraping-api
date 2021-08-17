@@ -1,1 +1,1 @@
-"Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US) AppleWebKit/534.12 (KHTML, like Gecko) Chrome/9.0.576.0 Safari/534.12"
+Google Chrome 51.0.2704.103 on Windows 10

@@ -28,7 +28,7 @@ class Scrape:
             unique_user_agent = True
 
     @staticmethod
-    def scrape(url):
+    def gig_scrape(url):
         headers = {
             'authority': 'fiverr.com',
             'dnt': '1',
@@ -157,10 +157,3 @@ class Scrape:
 
         data.update(cooked_data)
         return data
-
-
-url = "https://www.fiverr.com/otem_global/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses"
-scrapper = Scrape()
-data = scrapper.scrape(url)
-
-print(f"{data}")

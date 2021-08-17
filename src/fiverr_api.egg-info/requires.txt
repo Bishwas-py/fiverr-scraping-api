@@ -1,0 +1,16 @@
+beautifulsoup4~=4.9.3
+bs4~=0.0.1
+certifi~=2021.5.30
+charset-normalizer~=2.0.4
+html5lib~=1.1
+idna~=3.2
+random-user-agent~=1.0.1
+requests~=2.26.0
+six~=1.16.0
+soupsieve~=2.2.1
+urllib3~=1.26.6
+webencodings~=0.5.1
+
+[dev]
+pytest>=3.7
+check-manifest

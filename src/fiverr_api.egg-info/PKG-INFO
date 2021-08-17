@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: fiverr-api
+Version: 0.0.1
+Summary: Fiverr API - This Fiverr scrapping API is capable of getting all the info from a gig in Fiverr.
+Home-page: https://github.com/Bishwas-py/fiverr-scraping-api
+Author: Bishwas Bhandari
+Author-email: bishwasbh@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: License :: OSI Approved :: GNU GENERAL PUBLIC LICENSE
+Classifier: Operating System :: OS Independent
+Provides-Extra: dev
+License-File: LICENCE.txt
+
+UNKNOWN
+

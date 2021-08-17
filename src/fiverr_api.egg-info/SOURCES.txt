@@ -1,0 +1,8 @@
+LICENCE.txt
+README.md
+setup.py
+src/fiverr_api.egg-info/PKG-INFO
+src/fiverr_api.egg-info/SOURCES.txt
+src/fiverr_api.egg-info/dependency_links.txt
+src/fiverr_api.egg-info/requires.txt
+src/fiverr_api.egg-info/top_level.txt
