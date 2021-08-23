@@ -49,17 +49,22 @@ class Scrape:
         fiv_soup = BeautifulSoup(response.text, 'html5lib')
 
         gig_overview = fiv_soup.find('div', {'class': 'gig-overview'})
-        categories_breadcrumbs_html = gig_overview.find(
-            'nav', {'class': 'categories-breadcrumbs'}).find_all('span')
-
+        try:
+            categories_breadcrumbs_html = gig_overview.find(
+                'nav', {'class': 'categories-breadcrumbs'}).find_all('span')
+        except:
+            categories_breadcrumbs_html
+            
         categories_breadcrumbs = list()  # imp
 
         for category in categories_breadcrumbs_html:
             if category.text != '':
                 categories_breadcrumbs.append(category.text)
 
-        title = gig_overview.find('h1').text  # imp
-
+        try:
+            title = gig_overview.find('h1').text  # imp
+        except:
+            title = ''
         seller_overview_html = fiv_soup.find(
             'div', {'class': "seller-overview"})
         user_name = seller_overview_html.find(
@@ -312,5 +317,5 @@ class Scrape:
 
 
 if __name__ == "__main__":
-    scrape = Scrape().profile_scrape('https://www.fiverr.com/deesmithvo/')
+    scrape = Scrape().gig_scrape('https://www.fiverr.com/deesmithvo/provide-high-quality-voice-overs-to-help-bring-life-to-your-projects')
     print(scrape)

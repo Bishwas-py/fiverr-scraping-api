@@ -1,6 +1,6 @@
-# Fiverr API - Scrapes Fiverr
+# Fiverr API v0.0.8 - Scrapes Fiverr profile
 
-Fiverr API - This Fiverr scrapping API is capable of getting all the info from a gig in Fiverr.
+Fiverr API (Newer Version) - This Fiverr scrapping API is capable of getting all the info from a gig in Fiverr.
 
 ## Installation
 
@@ -18,147 +18,213 @@ pip install fiverr-api
 ```python
 from fiverr_api import Scrape
 
-# returns 'words'
-url = "https://www.fiverr.com/otem_global/your-kajabi-teachable-"\
+# the gig you wanna scrape
+gig_url = "https://www.fiverr.com/otem_global/your-kajabi-teachable-"\
     "website-expert-fix-your-pipeline-set-up-online-courses"
+
+# the profile you wanna scrape
+profile_url = "https://www.fiverr.com/otem_global/"
 
 # initialize fiverr scrapper
 scraper = Scrape()
 
-# returns the scraped data in dictory or json format
-data = scraper.gig_scrape(url)
+# returns the scraped gig's data in dictory or json format
+gig_data = scraper.gig_scrape(gig_url)
+
+# returns the scraped profile's data in dictory or json format
+profile_data = scraper.profile_scrape(profile_url)
 
 # print data or do what ever you want to do with it
-print(data)
+print(gig_data)
+print(profile_data)
 ```
 
-### Result
+### Result: GIG_SCRAPE
 ```json
 {
-    "user_name": "otem_global",
-    "title": "MEMBERSHIP WEBSITE",
+    "user_name": "deesmithvo",
+    "title": "Voiceover",
     "categories_breadcrumbs": [
-        "Programming & Tech",
-        "Website Builders & CMS",
-        "Full Website Creation"
+        "Music & Audio",
+        "Voice Over"
     ],
-    "rating": "4.9",
-    "ratings_count": "24",
+    "rating": "5",
+    "ratings_count": "292",
     "images": [
-        "https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/185639232/original/2e1b0f882eb8f14aba30dee8f2c30b19beb880b4/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.jpg",
-        "https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs2/185639232/original/22703c2453d6b56d800fd7b0a3f7e41f11e5d8cf/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.jpg",
-        "https://fiverr-res.cloudinary.com/images/t_thumbnail3_3,q_auto,f_auto/gigs/185639232/original/2e1b0f882eb8f14aba30dee8f2c30b19beb880b4/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.jpg",
-        "https://fiverr-res.cloudinary.com/images/t_thumbnail3_3,q_auto,f_auto/gigs2/185639232/original/22703c2453d6b56d800fd7b0a3f7e41f11e5d8cf/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.jpg",
-        "https://fiverr-res.cloudinary.com/images/t_thumbnail3_3,q_auto,f_auto/gigs3/185639232/original/e0ccd7f99ec328d0ca169b84b15f8919ae096ecd/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.jpg",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/a2f81b45b8eac37972a07bbf7be51ebc-1625667569/screencapture-mindirosser-mykajabi-LinkedIn-Profile-Mini-Training-Opt-In-Page-2021-07-07-15_17_03/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/4f27179e071e327dfd1cb1dd5b4a3c7b-1624107456/screencapture-freedomjoiross-morning-routine-pdf-2021-06-19-13_56_55/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/14fb953d5ea836f43395502dde039952-1623466136/screencapture-millennialhomeinvestor-2021-06-12-03_48_05/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/085627c842912c6889a0da552132816f-1622257065/screencapture-joiross-2021-05-27-13_46_26/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/ab6fa82339999a3b5e7b902314cab5fb-1621556283/screencapture-newagetalks-servicess-2021-05-20-20_40_41/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/33573d07ff305348e2b5ef0118773828-1621173138/screencapture-credit-360-group-mykajabi-optin-page-2021-05-16-11_56_03/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/7b065b4300ef902ca5ffa68b2c30bc4e-1619606557/screencapture-benedita-sousa-mykajabi-stackingjoints-2021-04-27-18_19_24/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.jpg",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/aebf8e8171b8c66b04446e311e2b513c-1619443045/screencapture-app-kartra-pages-sites-preview-3-2021-04-26-14_03_12/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/9f142a47b0826c931df20caf44dc8ddd-1616899170/screencapture-freedomjoiross-download-essential-Growth-Mindsets-to-Experience-Freedom-2021-03-28-04_37_39/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/5e4dbf2846e809081e26281e143ab378-1616720810/screencapture-onlydo-online-2021-03-25-23_46_30/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/f2fbb5acdca2aa749496773b714a0cca-1616632175/screencapture-joiross-2021-03-24-18_48_07%20(1)/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/5e9aa003f64ec09bb55574ecaee1f800-1616586256/screencapture-trupro-kartra-page-comingsoon-2021-03-24-12_43_01/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/4c4d66306dd9e10eb075b035605e1457-1616016584/screencapture-educatorsforchange2008-about-founder-2021-03-17-22_29_24/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/d74f75b2e9427f552a3778fb126e9143-1615168725/sales%20page_%20landing%20page_%20converting%20landing%20page_%20kajabi%20expert_%20kajabi%20website/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.jpg",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/10dfbcef3ec512a28f557c0bd65a440a-1613857929/screencapture-the-collar-club-mykajabi-admin-index-preview-2021-02-20-22_09_20/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/af7fe111ddddf78fc74f6a84de1d0bdf-1611433996/screencapture-websites-godaddy-en-GB-editor-7c131a20-a79c-43e1-b6f3-bd3e11e2e558-f2fd5e3c-9bb7-4c00-837b-68475e3418bc-2021-01-23-16_55_44/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png",
-        "https://fiverr-res.cloudinary.com/images/t_smartwm/t_delivery_thumb,q_auto,f_auto/attachments/delivery/asset/7b68358143f75fdc37bc63681c903f6f-1611063140/consultation-page-updated/your-kajabi-teachable-website-expert-fix-your-pipeline-set-up-online-courses.png"
+        "https://fiverr-res.cloudinary.com/videos/so_74.656115,t_main1,q_auto,f_auto/vr222n7r11jhrypou4tw/provide-high-quality-voice-overs-to-help-bring-life-to-your-projects.png",
+        "..."
     ],
-    "description": "About This GigHi, welcome to “ i will be your kajabi website expert, coaching website expert, fix your pipeline, set up online courses“ gigAre you looking for:A HIGH CONVERTING Kajabi websiteA Kajabi online course web-site using THINKIFIC/KARTRAA Kajabi landing page or sales funnelOr looking to transfer your current website to Kajabi?You’ve just landed on the right gig. We can help you with any Kajabi task. We have a flexible schedule and We are easy to work with. If you’re looking for a team of seller who’ll deliver high quality services with all transparency, you are on the right gig.\xa0WHAT WE PROVIDEFull Kajabi website creationProfessional Kajabi landing pageHigh converting Kajabi sales funnel, pipelineOnline course web-site, membership web sites (Kajabi, Thinkfic, Teachable)Ecommerce FunctionalitySEO OptimizationOn-Page SEO and moreWHY ME?Quality ServiceQuick and professional100% satisfactory work.Effective customer services.If you’re looking for a sales funnel on Clickfunnels, Kartra, Getresponse or click funnel, feel free to check out my other gigs. CONTACT ME NOW to get your KAJABI tasks done for you by an expert. I hope to hear from you.R",
+    "description": "... HIGHEST QUALITY voice over recordings on FIVERR! Please read full description before submitting an order.ELITE talent and SUPERIOR customer service.With over 13 years of experience in vocal recording and engineering, your words are in good hands, Let me tell your story and add a little magic to your next project.As a dynamic African American male voice ...",
     "meta_data": {
-        "Platform": [
-            "Wix"
+        "Gender": [
+            "Male"
         ],
-        "Specialization": [
-            "Blog",
-            "Business",
-            "Education",
-            "Portfolio",
-            "Entertainment",
-            "Non-profit",
-            "Wedding",
-            "Podcasting",
-            "Online Communities",
-            "Forms",
-            "Crowdfunding",
-            "Wiki /Knowledge",
-            "SaaS",
-            "Job Board",
-            "Portal",
-            "Brochure"
+        "Language": [
+            "English"
         ],
-        "Supported plugin types": [
-            "Marketing",
-            "Payment",
-            "Forum",
-            "Social Media",
-            "Customer Support",
-            "Shipping",
-            "Inventory",
-            "Analytics",
-            "Video",
-            "Form",
-            "Events",
-            "Music",
-            "Chat ",
-            "Membership",
-            "Map",
-            "FAQ",
-            "Gallery"
+        "Purpose": [
+            "Video Narration",
+            "TV",
+            "eLearning"
+        ],
+        "Accent": [
+            "English - American"
+        ],
+        "Age Range": [
+            "Adult"
+        ],
+        "Tone": [
+            "Calming",
+            "Casual",
+            "Corporate",
+            "Dramatic",
+            "Energetic"
         ]
     },
-    "seller_bio": None,
-    "profile_photo": "https: //fiverr-res.cloudinary.com/t_profile_original,q_auto,f_auto/attachments/profile/photo/61cf220c614f3e5bba7cd3d05e9a0c59-1627605699698/34ee6407-f943-451d-aab1-66abcbcc9ed3.jpg",
+    "seller_bio": "Unique and dynamic voice overs that bring life to any project!",
+    "profile_photo": "https://fiverr-res.cloudinary.com/t_profile_original,q_auto,f_auto/attachments/profile/photo/092096782fcd79252a1c8bce84951a81-1616396583081/ae9bdd13-6917-4a93-80bb-d3623ab533bc.png",
     "user_stats": {
-        "From": "Nigeria",
-        "Member since": "Nov 2020",
+        "From": "United States",
+        "Member since": "Jan 2021",
         "Avg. response time": "1 hour",
-        "Last delivery": "4 days"
+        "Last delivery": "1 day"
     },
-    "user_discription": "I Help People to Create Successful Sales Funnels and fast Websites\n\nAs a Sales Funnel Hacker and Designer, I help passionate coaches, consultants, and small businesses improve their marketing, conversion, and sales by designing high-converting funnels that appeal to their target audience.\n\nHere’s how I can help you. My areas of expertise include following, but are not limited to:\n\n--- Clickfunnels,  Building high converting sales funnels & product creation, landing page design & integration. SalesFunnels by using ClickFunnels. Sales Pages, Checkouts, Upsells Downsells and much more.\nThank you.",
+    "user_discription": "A refreshing African American millennial male voice over artist ready to help you tell your story and bring your project to life.\n",
     "price_and_features": {
-        "Basic": {
-            "price": "$25",
-            "discription": "Fully Responsive one page Kajabi website with Optin form",
+        "Number of words": {
+            "price": "$50",
+            "discription": "",
             "features": [
-                "Design Customization",
-                "Content Upload",
-                "Responsive Design",
-                "E-Commerce Functionality"
-            ]
-        },
-        "Standard": {
-            "price": "$150",
-            "discription": "3 Pages kajabi  website + ecommerce functionality",
-            "features": [
-                "Design Customization",
-                "Content Upload",
-                "Responsive Design",
-                "E-Commerce Functionality"
-            ]
-        },
-        "Premium": {
-            "price": "$250",
-            "discription": "Fully converting kajabi website + ecommerce functionality + membership setup",
-            "features": [
-                "Design Customization",
-                "Content Upload",
-                "Responsive Design",
-                "E-Commerce Functionality"
+                "HQ Audio File (WAV format))"
             ]
         }
     },
     "gig_tags": [
-        "membership funnel",
-        "kajabi website",
-        "kajabi pipeline",
-        "online course",
-        "kajabi expert"
-    ]
+        "male voice over",
+        "audio recording",
+        "narration",
+        "voice acting",
+        "voice talent"
+    ],
+    "delivery_days": "3 Days Delivery",
+    "revisions": "1 Revision"
+}
+
+```
+
+### Result: PROFILE_SCRAPE
+```json
+{
+  "user": {
+      "name": "bishwasbh",
+      "photo": "https://fiverr-res.cloudinary.com/t_profile_original,q_auto,f_auto/attachments/profile/photo/602e60b8e98a3d98ebf47508e874051e-1619826399837/c9ce5be4-1cd8-4a3d-abba-323b3096c69a.jpg",
+      "level": "",
+      "bio": "Fiverr software developer for python, django, automation, webscraping",
+      "from": "Nepal",
+      "member_since": "Jul 2018",
+      "response_time": "6 hours",
+      "recent_delivery": "1 month",
+      "description": "Hello, I am the best fiverr Django Python developer, Web Scrapping and Automation Expert. I have huge expertise in frontend and backend (Django) development. We have completed 174+ projects with different clients at various marketplaces since 2016, we have proficiency in the feild of Python Django Web Development and, Web Scrapping and Automation feild. We have 2+ years of hands on experience in Django Web Development and our team has 3.7+ experience in Django.",
+      "languages": [
+          [
+              "English",
+              "Basic"
+          ],
+          [
+              "Nepali(\u0928\u0947\u092a\u093e\u0932\u0940)",
+              "Native/Bilingual"
+          ],
+          [
+              "Hindi(\u0939\u093f\u0902\u0926\u0940)",
+              "Conversational"
+          ],
+          [
+              "Polish(polski)",
+              "Basic"
+          ]
+      ],
+      "skill_set": [
+          "Python programming",
+          "Python django",
+          "Javascript",
+          "Web application",
+          "Wordpresss",
+          "Bootstrap",
+          "Web development",
+          "Wordpress",
+          "Django",
+          "Mysql",
+          "Postgresql",
+          "Cpanel",
+          "Heroku",
+          "Python programmer",
+          "Jquery"
+      ]
+  },
+  "gig_info": {
+      "gigs": [
+          [
+              "I will install, setup or update flarum on cpanel, cloud server",
+              "/bishwasbh/install-setup-or-configure-flarum-on-cpanel-cloud-server?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=1&seller_online=true"
+          ],
+          [
+              "I will deploy django in cpanel server",
+              "/bishwasbh/deploy-django-in-cpanel-server?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=2&seller_online=true"
+          ],
+          [
+              "I will develop bots, web scraping, automation, and custom scripts",
+              "/bishwasbh/do-web-scraping-in-python-with-requests-and-beautifulsoup4?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=3&seller_online=true"
+          ],
+          [
+              "I will deploy django in heroku or pythonanywhere",
+              "/bishwasbh/deploy-django-in-pythonanywhere?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=4&seller_online=true"
+          ],
+          [
+              "I will python programming articles and seo",
+              "/bishwasbh/python-programming-articles-and-seo?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=5&seller_online=true"
+          ],
+          [
+              "I will develop django forum, tool web, portal, django blog and cms",
+              "/bishwasbh/develop-a-django-website?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=6&seller_online=true"
+          ],
+          [
+              "I will develop tool website and web apps",
+              "/bishwasbh/develop-tool-website-and-web-apps?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=7&seller_online=true"
+          ]
+      ],
+      "profile_ratings": {
+          "seller_communication_level": "5",
+          "recommended_to_friend": "5",
+          "service_as_described": "5"
+      },
+      "reviews": [
+          {
+              "buyer_name": "wesleyboy245",
+              "given_rating": "5",
+              "country_name": "United States"
+          },
+          {
+              "buyer_name": "wesleyboy245",
+              "given_rating": "5",
+              "country_name": "United States"
+          },
+          {
+              "buyer_name": "zoleoab",
+              "given_rating": "5",
+              "country_name": "Sweden"
+          },
+          {
+              "buyer_name": "nftprotocol",
+              "given_rating": "5",
+              "country_name": "United States"
+          },
+          {
+              "buyer_name": "zoleoab",
+              "given_rating": "5",
+              "country_name": "Sweden"
+          }
+      ]
+  }
 }
 
 ```
