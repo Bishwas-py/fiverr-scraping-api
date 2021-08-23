@@ -5,14 +5,14 @@ with open("README.md", "r") as fh:
     
 setup(
     name="fiverr-api",
-    version="0.0.4",
+    version="0.0.6",
     description="Fiverr API - This Fiverr scrapping API is capable of getting all the info from a gig in Fiverr.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Bishwas-py/fiverr-scraping-api",
     author="Bishwas Bhandari",
     author_email="bishwasbh@gmail.com",
-    py_modules=["fiv_api"],
+    py_modules=["fiverr_api"],
     package_dir={'':'src'},
     classifiers = [
         "Programming Language :: Python :: 3",

@@ -19,8 +19,8 @@ pip install fiverr-api
 from fiverr_api import Scrape
 
 # returns 'words'
-url = "https://www.fiverr.com/otem_global/your-kajabi-teachable-web
-site-expert-fix-your-pipeline-set-up-online-courses"
+url = "https://www.fiverr.com/otem_global/your-kajabi-teachable-"\
+    "website-expert-fix-your-pipeline-set-up-online-courses"
 
 # initialize fiverr scrapper
 scraper = Scrape()
@@ -162,6 +162,11 @@ print(data)
 }
 
 ```
+
+### Precautions
+Please follow these precautions while using the fiverr api:
+- Try not to scrape the same url frequently without any break
+- Try to scrape multiple url in some time internal/break 
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

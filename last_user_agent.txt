@@ -1,1 +1,1 @@
-Google Chrome 51.0.2704.103 on Windows 10
+Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2018.0 Safari/537.36
