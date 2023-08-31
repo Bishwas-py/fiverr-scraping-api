@@ -5,8 +5,8 @@ from fiverr_api.utils.actions import actions
 from fiverr_api.utils.scrape_utils import extract_text, extract_list_items
 
 
-def gig_scrape(url):
-    response = actions.request_session.get(url)
+def gig_scrape(gig_url: str):
+    response = actions.request_session.get(gig_url)
     soup = BeautifulSoup(response.text, 'html5lib')
 
     main_soup = soup.find('div', class_='main')
@@ -63,7 +63,7 @@ def gig_scrape(url):
         'features': extract_list_items(form.find('ul', class_='features'), class_name='feature')
     } for label, form in zip(labels, forms)}
 
-    data = {
+    return {
         'user_name': user_name,
         'title': title,
         'categories_breadcrumbs': categories_breadcrumbs,
@@ -79,8 +79,6 @@ def gig_scrape(url):
         'price_and_features': price_and_features,
         'gig_tags': gig_tags,
     }
-
-    return json.dumps(data, indent=4)
 
 
 if __name__ == "__main__":

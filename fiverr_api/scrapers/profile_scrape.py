@@ -4,8 +4,8 @@ from fiverr_api.utils.actions import actions
 from fiverr_api.utils.scrape_utils import extract_text, extract_list_items
 
 
-def profile_scrape(url):
-    response = actions.request_session.get(url)
+def profile_scrape(profile_url: str):
+    response = actions.request_session.get(profile_url)
     soup = BeautifulSoup(response.text, 'html5lib')
     user_page_soup = soup.find('div', class_='user-page-perseus')
 
@@ -16,7 +16,7 @@ def profile_scrape(url):
                                                                                                          class_='user-badge-round') else ''
 
     oneliner = user_page_soup.find('div', class_='oneliner-wrapper')
-    bio = extract_text(oneliner.find('small', class_='oneliner'))
+    bio = extract_text(oneliner.find('span', class_='oneliner'))
 
     user_stats = user_page_soup.find('ul', class_='user-stats')
     user_from = extract_text(user_stats.find('li', class_='location').find('b'))
@@ -46,11 +46,24 @@ def profile_scrape(url):
     gig_listings = user_page_soup.find_all('div', class_='gig-wrapper-impressions')
     gigs = []
     for gig in gig_listings:
-        gig_title_elem = gig.find('h3', class_='text-display-7')
+        gig_title_elem = gig.find('h3')
         if gig_title_elem:
             gig_title = gig_title_elem.find('a')['title']
             gig_href = gig_title_elem.find('a')['href']
-            gigs.append((gig_title, gig_href))
+            rating_wrapper_soup = gig.find('div', class_='rating-wrapper')
+            gig_rating_soup = rating_wrapper_soup.find('span', class_='gig-rating')
+            """html
+            <span class="gig-rating text-body-2">
+            <svg xmlns="...></svg>
+            5.0
+            <span>(20)</span></span>
+            """
+            gig_rating = gig_rating_soup.contents[1] if gig_rating_soup else None
+            gig_rating = gig_rating.text if gig_rating else None
+            gig_rating_count_soup = gig_rating_soup.find('span')
+            gig_rating_count = gig_rating_count_soup if gig_rating_count_soup else None
+            gig_rating_count = gig_rating_count.text.strip('()') if gig_rating_count else None
+            gigs.append((gig_title, gig_href, gig_rating, gig_rating_count))
         else:
             print("Gig title element not found for a listing.")
 
@@ -97,26 +110,33 @@ def profile_scrape(url):
     reviews_list = gigs_review_soup.find('ul', class_='review-list')
     seller_reviews = []
 
-    for review_item in reviews_list.find_all('li', class_='review-item'):
+    for review_item_soup in reviews_list.find_all('li', class_='review-item'):
         review_data = {}
 
         # Extract user details
-        user_profile = review_item.find('div', class_='user-profile-image')
-        user_name = user_profile.find('b').text.strip()
-        user_country = user_profile.find('div', class_='country-name').text.strip()
+        user_profile_icon_soup = review_item_soup.find('div', class_='user-profile-image')
+        user_profile_img_soup = user_profile_icon_soup.find('img')
+        if user_profile_img_soup:
+            user_photo = user_profile_img_soup['src']
+        else:
+            user_photo = None
+
+        reviewer_details_soup = review_item_soup.find('div', class_='reviewer-details')
+        buyer_user_name = reviewer_details_soup.find('b').text.strip() if reviewer_details_soup else '<unknown>'
+        buyer_user_country = review_item_soup.find('div', class_='country-name').text.strip()
 
         # Extract review details
-        review_details = review_item.find('div', class_='review-details')
-        rating = review_details.find('b', class_='rating-score').text.strip()
-        review_date = review_details.find('time', class_='text-body-2').text.strip()
-        review_text = review_details.find('div', class_='review-description').p.text.strip()
+        review_details_soup = review_item_soup.find('div', class_='review-details')
+        rating = review_details_soup.find('b', class_='rating-score').text.strip()
+        review_date = review_details_soup.find('time', class_='text-body-2').text.strip()
+        review_text = review_details_soup.find('div', class_='review-description').p.text.strip()
 
         # Extract gig details
-        gig_link = review_details.find('a', class_='gig-link review-gig-info-link')['href']
+        gig_link = review_details_soup.find('a', class_='gig-link review-gig-info-link')['href']
 
         # Append data to the reviews list
-        review_data['user_name'] = user_name
-        review_data['user_country'] = user_country
+        review_data['user_name'] = buyer_user_name
+        review_data['user_country'] = buyer_user_country
         review_data['rating'] = rating
         review_data['review_date'] = review_date
         review_data['review_text'] = review_text
@@ -124,7 +144,7 @@ def profile_scrape(url):
 
         seller_reviews.append(review_data)
 
-    return json.dumps({
+    return {
         'user': {
             'name': user_name,
             'photo': user_photo,
@@ -144,9 +164,11 @@ def profile_scrape(url):
             'starers_rating': starers_rating,
             'seller_reviews': seller_reviews
         }
-    }, indent=4)
+    }
 
 
 if __name__ == "__main__":
+    import json
+
     scrape = profile_scrape('https://www.fiverr.com/torokcsaba')
-    print(scrape)
+    print(json.dumps(scrape, indent=4))

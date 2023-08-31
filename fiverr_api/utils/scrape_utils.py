@@ -1,4 +1,7 @@
-def extract_text(element, class_name=None):
+from typing import Optional
+
+
+def extract_text(element, class_name=None) -> Optional[str | None]:
     if element:
         if class_name:
             found_element = element.find(class_=class_name)
