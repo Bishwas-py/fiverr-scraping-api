@@ -124,4 +124,4 @@ For major changes, please open an issue first to discuss what you would like to 
 
 ## Author
 
-Check more [my projects](https://bishwas.net/projects).
+Check more of [my projects](https://bishwas.net/projects).
