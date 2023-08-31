@@ -1,7 +1,7 @@
 import json
 from bs4 import BeautifulSoup
 from fiverr_api.utils.actions import actions
-from fiverr_api.utils.scrape_utils import extract_text, extract_list_items
+from fiverr_api.utils.scrape_utils import extract_text, extract_list_items, find_recursive
 
 
 def profile_scrape(profile_url: str):
@@ -9,9 +9,14 @@ def profile_scrape(profile_url: str):
     soup = BeautifulSoup(response.text, 'html5lib')
     user_page_soup = soup.find('div', class_='user-page-perseus')
 
-    user_area = user_page_soup.find('img', class_='profile-pict-img')
-    user_name, user_photo = user_area['alt'], user_area['src']
+    if not user_page_soup:
+        user_page_soup = soup
 
+    user_area = user_page_soup.find('img', class_='profile-pict-img')
+    user_photo = user_area['src'] if user_area else None
+
+    user_name_soup = user_page_soup.find('b', class_='seller-link')
+    user_name = user_name_soup.string if user_page_soup else '<undetected>'
     user_level = user_page_soup.find('a', class_='user-badge-round')['class'][-1] if user_page_soup.find('a',
                                                                                                          class_='user-badge-round') else ''
 
@@ -19,16 +24,26 @@ def profile_scrape(profile_url: str):
     bio = extract_text(oneliner.find('span', class_='oneliner'))
 
     user_stats = user_page_soup.find('ul', class_='user-stats')
-    user_from = extract_text(user_stats.find('li', class_='location').find('b'))
-    member_since = extract_text(user_stats.find('li', class_='member-since').find('b'))
-    response_time = extract_text(user_stats.find('li', class_='response-time').find('b'))
-    recent_delivery = extract_text(user_stats.find('li', class_='recent-delivery').find('strong')).split('<!-- -->')[
-        0].replace('\xa0', ' ')
+
+    user_from_soup = find_recursive([('li', {'class': 'location'}), ('b', {})], user_stats)
+    user_from = extract_text(user_from_soup)
+    member_since_soup = find_recursive([('li', {'class': 'member-since'}), ('b', {})], user_stats)
+    member_since = extract_text(member_since_soup)
+    response_time_soup = find_recursive([('li', {'class': 'response-time'}), ('b', {})], user_stats)
+    response_time = extract_text(response_time_soup)
+    recent_delivery_soup = find_recursive([('li', {'class': 'recent-delivery'}), ('strong', {})], user_stats)
+    recent_delivery = extract_text(recent_delivery_soup)
+    if recent_delivery:
+        recent_delivery = recent_delivery.split('<!-- -->')[0].replace('\xa0', ' ')
 
     seller_profile = user_page_soup.find('div', class_='seller-profile')
-    description = extract_text(seller_profile.find('div', class_='description').find('p'))
+    description_soup = find_recursive([
+        ('div', {'class': 'description'}),
+        ('p', {})
+    ], seller_profile)
+    description = extract_text(description_soup)
 
-    languages_soup = seller_profile.find('div', class_='languages')
+    languages_soup = seller_profile.find('div', class_='languages') if seller_profile else []
     languages = []
     if languages_soup:
         languages_list = languages_soup.find('ul').find_all('li')
@@ -40,8 +55,8 @@ def profile_scrape(profile_url: str):
                 proficiency = lang_parts[1].strip()
                 languages.append((language, proficiency))
 
-    skills_area = seller_profile.find('div', class_='skills')
-    skill_set = extract_list_items(skills_area.find('ul')) if skills_area else []
+    skills_area_soup = seller_profile.find('div', class_='skills') if seller_profile else None
+    skill_set = extract_list_items(skills_area_soup.find('ul')) if skills_area_soup else []
 
     gig_listings = user_page_soup.find_all('div', class_='gig-wrapper-impressions')
     gigs = []
@@ -52,15 +67,9 @@ def profile_scrape(profile_url: str):
             gig_href = gig_title_elem.find('a')['href']
             rating_wrapper_soup = gig.find('div', class_='rating-wrapper')
             gig_rating_soup = rating_wrapper_soup.find('span', class_='gig-rating')
-            """html
-            <span class="gig-rating text-body-2">
-            <svg xmlns="...></svg>
-            5.0
-            <span>(20)</span></span>
-            """
             gig_rating = gig_rating_soup.contents[1] if gig_rating_soup else None
             gig_rating = gig_rating.text if gig_rating else None
-            gig_rating_count_soup = gig_rating_soup.find('span')
+            gig_rating_count_soup = gig_rating_soup.find('span') if gig_rating_soup else None
             gig_rating_count = gig_rating_count_soup if gig_rating_count_soup else None
             gig_rating_count = gig_rating_count.text.strip('()') if gig_rating_count else None
             gigs.append((gig_title, gig_href, gig_rating, gig_rating_count))
@@ -77,7 +86,7 @@ def profile_scrape(profile_url: str):
         'service_as_described': 0
     }
     for ranking_soup in ranking_list_soup:
-        ranking_soup_text = str(ranking_soup.find(text=True, recursive=False))
+        ranking_soup_text = ranking_soup.contents[0].strip() if ranking_soup.contents else None
         if ranking_soup_text == "Seller communication level":
             rating_breakdown['seller_communication_level'] = ranking_soup.find('b', class_='rating-score').text
         elif ranking_soup_text == "Recommend to a friend":
@@ -107,10 +116,10 @@ def profile_scrape(profile_url: str):
         if rating_label == "1 Stars":
             starers_rating['one_starers_rating_count'] = rating_count
 
-    reviews_list = gigs_review_soup.find('ul', class_='review-list')
+    reviews_list = gigs_review_soup.find('ul', class_='review-list') if gigs_review_soup else None
     seller_reviews = []
 
-    for review_item_soup in reviews_list.find_all('li', class_='review-item'):
+    for review_item_soup in reviews_list.find_all('li', class_='review-item') if reviews_list else []:
         review_data = {}
 
         # Extract user details
@@ -170,5 +179,5 @@ def profile_scrape(profile_url: str):
 if __name__ == "__main__":
     import json
 
-    scrape = profile_scrape('https://www.fiverr.com/torokcsaba')
+    scrape = profile_scrape('https://www.fiverr.com/bishwas')
     print(json.dumps(scrape, indent=4))

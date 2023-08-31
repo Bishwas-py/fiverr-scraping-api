@@ -1,5 +1,7 @@
 from typing import Optional
 
+import bs4
+
 
 def extract_text(element, class_name=None) -> Optional[str | None]:
     if element:
@@ -16,3 +18,11 @@ def extract_list_items(element, class_name=None):
             return [item.text for item in element.find_all(class_=class_name)]
         return [item.text for item in element.find_all('li')]
     return []
+
+
+def find_recursive(queries, soup) -> Optional[bs4.Tag | None]:
+    for query in queries:
+        soup = soup.find(*query)
+        if not soup:
+            return None
+    return soup
