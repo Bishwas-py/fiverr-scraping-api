@@ -1,243 +1,122 @@
-# Fiverr API v0.0.8 - Scrapes Fiverr profile
+# Fiverr API Scraper
 
-Fiverr API (Newer Version) - This Fiverr scrapping API is capable of getting all the info from a gig in Fiverr.
+Fiverr API Scraper is a Python library that allows you to extract detailed information from Fiverr gig pages and user
+profiles. This tool can be used to programmatically gather data from Fiverr gigs and profiles, facilitating analysis and
+automation of tasks related to Fiverr.
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install fiverr-api.
+You can install the Fiverr API Scraper using pip:
 
 ```bash
 pip install fiverr-api
 ```
 
-## Essential Links
-[GitHub Repo](https://github.com/Bishwas-py/fiverr-scraping-api), [Issue A Bug](https://github.com/Bishwas-py/fiverr-scraping-api/issues) and ask for help in [Webmatrices Forum](http://webmatrices.com/)!
-
 ## Usage
 
+Below are examples of how to use the Fiverr API Scraper to extract data from Fiverr gig pages and user profiles.
+
+### Gig Scrape Example
+
 ```python
-from fiverr_api.fiverr_api import Scrape
+from fiverr_api.scrapers import gig_scrape
 
-# the gig you wanna scrape
-gig_url = "https://www.fiverr.com/otem_global/your-kajabi-teachable-"
-          "website-expert-fix-your-pipeline-set-up-online-courses"
+# URL of the Fiverr gig you want to scrape
+gig_url = "https://www.fiverr.com/some-seller/some-gig-title"
 
-# the profile you wanna scrape
-profile_url = "https://www.fiverr.com/otem_global/"
+# Scrape gig data
+gig_data = gig_scrape(gig_url)
 
-# initialize fiverr scrapper
-scraper = Scrape()
-
-# returns the scraped gig's data in dictory or json format
-gig_data = scraper.gig_scrape(gig_url)
-
-# returns the scraped profile's data in dictory or json format
-profile_data = scraper.profile_scrape(profile_url)
-
-# print data or do what ever you want to do with it
+# Print the scraped gig data
 print(gig_data)
+```
+
+### Profile Scrape Example
+
+```python
+from fiverr_api.scrapers import profile_scrape
+
+# URL of the Fiverr profile you want to scrape
+profile_url = "https://www.fiverr.com/some-seller"
+
+# Scrape profile data
+profile_data = profile_scrape(profile_url)
+
+# Print the scraped profile data
 print(profile_data)
 ```
 
-### Result: GIG_SCRAPE
-```json
-{
-    "user_name": "deesmithvo",
-    "title": "Voiceover",
-    "categories_breadcrumbs": [
-        "Music & Audio",
-        "Voice Over"
-    ],
-    "rating": "5",
-    "ratings_count": "292",
-    "images": [
-        "https://fiverr-res.cloudinary.com/videos/so_74.656115,t_main1,q_auto,f_auto/vr222n7r11jhrypou4tw/provide-high-quality-voice-overs-to-help-bring-life-to-your-projects.png",
-        "..."
-    ],
-    "description": "... HIGHEST QUALITY voice over recordings on FIVERR! Please read full description before submitting an order.ELITE talent and SUPERIOR customer service.With over 13 years of experience in vocal recording and engineering, your words are in good hands, Let me tell your story and add a little magic to your next project.As a dynamic African American male voice ...",
-    "meta_data": {
-        "Gender": [
-            "Male"
-        ],
-        "Language": [
-            "English"
-        ],
-        "Purpose": [
-            "Video Narration",
-            "TV",
-            "eLearning"
-        ],
-        "Accent": [
-            "English - American"
-        ],
-        "Age Range": [
-            "Adult"
-        ],
-        "Tone": [
-            "Calming",
-            "Casual",
-            "Corporate",
-            "Dramatic",
-            "Energetic"
-        ]
-    },
-    "seller_bio": "Unique and dynamic voice overs that bring life to any project!",
-    "profile_photo": "https://fiverr-res.cloudinary.com/t_profile_original,q_auto,f_auto/attachments/profile/photo/092096782fcd79252a1c8bce84951a81-1616396583081/ae9bdd13-6917-4a93-80bb-d3623ab533bc.png",
-    "user_stats": {
-        "From": "United States",
-        "Member since": "Jan 2021",
-        "Avg. response time": "1 hour",
-        "Last delivery": "1 day"
-    },
-    "user_discription": "A refreshing African American millennial male voice over artist ready to help you tell your story and bring your project to life.\n",
-    "price_and_features": {
-        "Number of words": {
-            "price": "$50",
-            "discription": "",
-            "features": [
-                "HQ Audio File (WAV format))"
-            ]
-        }
-    },
-    "gig_tags": [
-        "male voice over",
-        "audio recording",
-        "narration",
-        "voice acting",
-        "voice talent"
-    ],
-    "delivery_days": "3 Days Delivery",
-    "revisions": "1 Revision"
-}
+## Proxy Support
 
+You can use the Fiverr API Scraper with a proxy by setting via `actions.set_proxy()`:
+
+```python
+from fiverr_api.utils.actions import actions
+
+# Set proxy
+actions.set_proxy({
+    "http": "http://username:password@proxy:port",
+    "https": "http://username:password@proxy:port"
+})
 ```
 
-### Result: PROFILE_SCRAPE
-```json
-{
-  "user": {
-      "name": "bishwasbh",
-      "photo": "https://fiverr-res.cloudinary.com/t_profile_original,q_auto,f_auto/attachments/profile/photo/602e60b8e98a3d98ebf47508e874051e-1619826399837/c9ce5be4-1cd8-4a3d-abba-323b3096c69a.jpg",
-      "level": "",
-      "bio": "Fiverr software developer for python, django, automation, webscraping",
-      "from": "Nepal",
-      "member_since": "Jul 2018",
-      "response_time": "6 hours",
-      "recent_delivery": "1 month",
-      "description": "Hello, I am the best fiverr Django Python developer, Web Scrapping and Automation Expert. I have huge expertise in frontend and backend (Django) development. We have completed 174+ projects with different clients at various marketplaces since 2016, we have proficiency in the feild of Python Django Web Development and, Web Scrapping and Automation feild. We have 2+ years of hands on experience in Django Web Development and our team has 3.7+ experience in Django.",
-      "languages": [
-          [
-              "English",
-              "Basic"
-          ],
-          [
-              "Nepali(\u0928\u0947\u092a\u093e\u0932\u0940)",
-              "Native/Bilingual"
-          ],
-          [
-              "Hindi(\u0939\u093f\u0902\u0926\u0940)",
-              "Conversational"
-          ],
-          [
-              "Polish(polski)",
-              "Basic"
-          ]
-      ],
-      "skill_set": [
-          "Python programming",
-          "Python django",
-          "Javascript",
-          "Web application",
-          "Wordpresss",
-          "Bootstrap",
-          "Web development",
-          "Wordpress",
-          "Django",
-          "Mysql",
-          "Postgresql",
-          "Cpanel",
-          "Heroku",
-          "Python programmer",
-          "Jquery"
-      ]
-  },
-  "gig_info": {
-      "gigs": [
-          [
-              "I will install, setup or update flarum on cpanel, cloud server",
-              "/bishwasbh/install-setup-or-configure-flarum-on-cpanel-cloud-server?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=1&seller_online=true"
-          ],
-          [
-              "I will deploy django in cpanel server",
-              "/bishwasbh/deploy-django-in-cpanel-server?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=2&seller_online=true"
-          ],
-          [
-              "I will develop bots, web scraping, automation, and custom scripts",
-              "/bishwasbh/do-web-scraping-in-python-with-requests-and-beautifulsoup4?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=3&seller_online=true"
-          ],
-          [
-              "I will deploy django in heroku or pythonanywhere",
-              "/bishwasbh/deploy-django-in-pythonanywhere?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=4&seller_online=true"
-          ],
-          [
-              "I will python programming articles and seo",
-              "/bishwasbh/python-programming-articles-and-seo?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=5&seller_online=true"
-          ],
-          [
-              "I will develop django forum, tool web, portal, django blog and cms",
-              "/bishwasbh/develop-a-django-website?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=6&seller_online=true"
-          ],
-          [
-              "I will develop tool website and web apps",
-              "/bishwasbh/develop-tool-website-and-web-apps?context_referrer=user_page&ref_ctx_id=37227c7bbf14f51135f6ad8bef05d80c&pckg_id=1&pos=7&seller_online=true"
-          ]
-      ],
-      "profile_ratings": {
-          "seller_communication_level": "5",
-          "recommended_to_friend": "5",
-          "service_as_described": "5"
-      },
-      "reviews": [
-          {
-              "buyer_name": "wesleyboy245",
-              "given_rating": "5",
-              "country_name": "United States"
-          },
-          {
-              "buyer_name": "wesleyboy245",
-              "given_rating": "5",
-              "country_name": "United States"
-          },
-          {
-              "buyer_name": "zoleoab",
-              "given_rating": "5",
-              "country_name": "Sweden"
-          },
-          {
-              "buyer_name": "nftprotocol",
-              "given_rating": "5",
-              "country_name": "United States"
-          },
-          {
-              "buyer_name": "zoleoab",
-              "given_rating": "5",
-              "country_name": "Sweden"
-          }
-      ]
-  }
-}
+## Changing User-Agent or Other Headers
 
+You can change the user-agent or other headers by setting via `actions.set_headers()`:
+
+```python
+from fiverr_api.utils.actions import actions  
+
+# Set headers
+actions.set_headers({
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,"
+              "image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Cache-Control": "max-age=0",
+    "Connection": "keep-alive",
+    "Host": "www.fiverr.com",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1"
+})
+
+# Set user-agent specifically
+actions.set_user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                       "(KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36")
+
+# Get headers with actions.headers
+print(actions.headers)
 ```
 
-### Precautions
-Please follow these precautions while using the fiverr api:
-- Try not to scrape the same url frequently without any break
-- Try to scrape multiple url in some time internal/break 
+## Project Structure
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+The Fiverr API Scraper is organized into several modules to enhance code readability and maintainability:
 
-Please make sure to update tests as appropriate.
+- `fiverr_api`
+    - `gig_scrape.py`: Contains functions to scrape gig-related information.
+    - `profile_scrape.py`: Contains functions to scrape user profile information.
+- `fiverr_api.utils`
+    - `scrape_utils.py`: Contains utility functions for extracting information from HTML elements.
+    - `actions.py`: Defines the Actions class responsible for handling HTTP requests.
+
+`scraper.py` gives you a function named `get_perseus_initial_props()` which returns the initial props of
+the Fiverr page. This function is used by the other modules to extract initial `JSON` data from the page, and
+is also used by `gig_scrape.py` and `profile_scrape.py` to extract data from the page.
 
 ## License
+
 [GPL](https://choosealicense.com/licenses/gpl-3.0/)
+
+## Contributing
+
+[Pull requests](https://github.com/Bishwas-py/fiverr-scraping-api) are welcome.
+For major changes, please open an issue first to discuss what you would like to change.
+
+## Author
+
+Check more [my projects](https://bishwas.net/projects).

@@ -2,7 +2,7 @@ import json
 from bs4 import BeautifulSoup
 
 from fiverr_api.utils.actions import actions
-from fiverr_api.utils.scrape_utils import extract_text, extract_list_items
+from fiverr_api.utils.scrape_utils import extract_text, extract_list_items, get_perseus_initial_props
 
 
 def gig_scrape(gig_url: str):
@@ -32,7 +32,9 @@ def gig_scrape(gig_url: str):
     gig_images_list = gig_gallery_soup.find_all('img', src=True)
     images = [image['src'] for image in gig_images_list]
 
-    description = extract_text(main_soup.find('div', class_='description-content'))
+    about_this_gig_soup = main_soup.find(text=lambda text: text and 'about this gig' in text.lower())
+
+    description = extract_text(about_this_gig_soup.next_element if about_this_gig_soup else None)
 
     metadata_soup = main_soup.find('ul', class_='metadata')
     metadata_attributes = metadata_soup.find_all('li', class_='metadata-attribute') if metadata_soup else []
@@ -44,24 +46,19 @@ def gig_scrape(gig_url: str):
     profile_photo_img_soup = seller_card_soup.find('img')
     profile_photo = profile_photo_img_soup['src'] if profile_photo_img_soup else None
     user_name = profile_photo_img_soup['alt'] if profile_photo_img_soup else None
-    user_stats_soup = seller_card_soup.find('ul', class_='user-stats').find_all('li')
-    user_stats = {stat.find(text=True): stat.find('strong').text for stat in user_stats_soup}
 
-    user_description = extract_text(seller_card_soup.find('article', class_='seller-desc')).replace('+ See More', '')
+    user_stats_soup = seller_card_soup.select('ul.user-stats > li')
+    user_stats = {stat.find(text=True): stat.find('strong').text for stat in user_stats_soup} if user_stats_soup else {}
 
-    gig_tags_container = main_soup.find('div', class_='gig-tags-container').find('ul').find_all('li')
-    gig_tags = [tag.text for tag in gig_tags_container]
+    user_description = extract_text(seller_card_soup.find('article', class_='seller-desc'))
+    if user_description:
+        user_description = user_description.replace('+ See More', '')
 
-    packages_tabs_soup = soup.find('div', class_='packages-tabs')
-    labels = packages_tabs_soup.find_all('label')
-    forms = packages_tabs_soup.find_all('form')
-    price_and_features = {label.text: {
-        'price': form.find('span', class_='price').text,
-        'description': extract_text(form.find('p')),
-        'delivery_days': extract_text(form.find('b', class_='delivery')).replace(' Day Delivery', ''),
-        'revisions': extract_text(form.find('b', class_='revisions')).replace(' Revisions', ''),
-        'features': extract_list_items(form.find('ul', class_='features'), class_name='feature')
-    } for label, form in zip(labels, forms)}
+    # gig_tags_container = main_soup.find('div', class_='gig-tags-container').find('ul').find_all('li')
+    gig_tags_container = main_soup.select('div.gig-tags-container > ul > li')
+    gig_tags = [tag.text for tag in gig_tags_container] if gig_tags_container else []
+
+    perseus_initial_props = get_perseus_initial_props(soup)
 
     return {
         'user_name': user_name,
@@ -76,12 +73,14 @@ def gig_scrape(gig_url: str):
         'profile_photo': profile_photo,
         'user_stats': user_stats,
         'user_description': user_description,
-        'price_and_features': price_and_features,
         'gig_tags': gig_tags,
+        'perseus_initial_props': perseus_initial_props
     }
 
 
 if __name__ == "__main__":
+    import json
+
     scrape = gig_scrape(
-        'https://www.fiverr.com/torokcsaba/record-a-professional-hungarian-voice-over-for-you')
-    print(scrape)
+        'https://www.fiverr.com/bishwasbh/do-web-scraping-in-python-with-requests-and-beautifulsoup4')
+    print(json.dumps(scrape, indent=4))

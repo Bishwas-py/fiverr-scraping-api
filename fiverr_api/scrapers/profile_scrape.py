@@ -1,7 +1,7 @@
 import json
 from bs4 import BeautifulSoup
 from fiverr_api.utils.actions import actions
-from fiverr_api.utils.scrape_utils import extract_text, extract_list_items, find_recursive
+from fiverr_api.utils.scrape_utils import extract_text, extract_list_items, get_perseus_initial_props
 
 
 def profile_scrape(profile_url: str):
@@ -17,30 +17,27 @@ def profile_scrape(profile_url: str):
 
     user_name_soup = user_page_soup.find('b', class_='seller-link')
     user_name = user_name_soup.string if user_page_soup else '<undetected>'
-    user_level = user_page_soup.find('a', class_='user-badge-round')['class'][-1] if user_page_soup.find('a',
-                                                                                                         class_='user-badge-round') else ''
+    user_badge_soup = user_page_soup.find('a', class_='user-badge-round')
+    user_level = user_badge_soup['class'][-1] if user_badge_soup else ''
 
     oneliner = user_page_soup.find('div', class_='oneliner-wrapper')
     bio = extract_text(oneliner.find('span', class_='oneliner'))
 
     user_stats = user_page_soup.find('ul', class_='user-stats')
 
-    user_from_soup = find_recursive([('li', {'class': 'location'}), ('b', {})], user_stats)
+    user_from_soup = user_stats.select_one('li.location > b')
     user_from = extract_text(user_from_soup)
-    member_since_soup = find_recursive([('li', {'class': 'member-since'}), ('b', {})], user_stats)
+    member_since_soup = user_stats.select_one('li.member-since > b')
     member_since = extract_text(member_since_soup)
-    response_time_soup = find_recursive([('li', {'class': 'response-time'}), ('b', {})], user_stats)
+    response_time_soup = user_stats.select_one('li.response-time > b')
     response_time = extract_text(response_time_soup)
-    recent_delivery_soup = find_recursive([('li', {'class': 'recent-delivery'}), ('strong', {})], user_stats)
+    recent_delivery_soup = user_stats.select_one('li.recent-delivery > strong')
     recent_delivery = extract_text(recent_delivery_soup)
     if recent_delivery:
         recent_delivery = recent_delivery.split('<!-- -->')[0].replace('\xa0', ' ')
 
     seller_profile = user_page_soup.find('div', class_='seller-profile')
-    description_soup = find_recursive([
-        ('div', {'class': 'description'}),
-        ('p', {})
-    ], seller_profile)
+    description_soup = seller_profile.select_one('div.description > p')
     description = extract_text(description_soup)
 
     languages_soup = seller_profile.find('div', class_='languages') if seller_profile else []
@@ -153,6 +150,8 @@ def profile_scrape(profile_url: str):
 
         seller_reviews.append(review_data)
 
+    perseus_initial_props = get_perseus_initial_props(soup)
+
     return {
         'user': {
             'name': user_name,
@@ -172,12 +171,13 @@ def profile_scrape(profile_url: str):
             'rating_breakdown': rating_breakdown,
             'starers_rating': starers_rating,
             'seller_reviews': seller_reviews
-        }
+        },
+        'perseus_initial_props': perseus_initial_props
     }
 
 
 if __name__ == "__main__":
     import json
 
-    scrape = profile_scrape('https://www.fiverr.com/bishwas')
+    scrape = profile_scrape('https://www.fiverr.com/bishwasbh')
     print(json.dumps(scrape, indent=4))
