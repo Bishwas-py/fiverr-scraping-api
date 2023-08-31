@@ -1,8 +1,8 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
-    
+
 setup(
     name="fiverr-api",
     version="0.0.8",
@@ -13,15 +13,16 @@ setup(
     author="Bishwas Bhandari",
     author_email="bishwasbh@gmail.com",
     py_modules=["fiverr_api"],
-    package_dir={'':'src'},
-    classifiers = [
+    packages=find_packages(),
+    classifiers=[
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        ""
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent"
     ],
-    install_requires = [
+    install_requires=[
         "beautifulsoup4 ~= 4.9.3",
         "bs4 ~= 0.0.1",
         "certifi ~= 2021.5.30",
@@ -35,7 +36,7 @@ setup(
         "urllib3 ~= 1.26.6",
         "webencodings ~= 0.5.1"
     ],
-    extras_require = {
+    extras_require={
         "dev": [
             "pytest>=3.7",
             "check-manifest"

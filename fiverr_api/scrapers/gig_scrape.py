@@ -1,9 +1,8 @@
 import json
-import requests
 from bs4 import BeautifulSoup
 
-from utils.actions import actions
-from utils.scrape_utils import extract_text, extract_list_items
+from fiverr_api.utils.actions import actions
+from fiverr_api.utils.scrape_utils import extract_text, extract_list_items
 
 
 def gig_scrape(url):

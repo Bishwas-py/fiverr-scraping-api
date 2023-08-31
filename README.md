@@ -16,11 +16,11 @@ pip install fiverr-api
 ## Usage
 
 ```python
-from fiverr_api import Scrape
+from fiverr_api.fiverr_api import Scrape
 
 # the gig you wanna scrape
-gig_url = "https://www.fiverr.com/otem_global/your-kajabi-teachable-"\
-    "website-expert-fix-your-pipeline-set-up-online-courses"
+gig_url = "https://www.fiverr.com/otem_global/your-kajabi-teachable-"
+          "website-expert-fix-your-pipeline-set-up-online-courses"
 
 # the profile you wanna scrape
 profile_url = "https://www.fiverr.com/otem_global/"
