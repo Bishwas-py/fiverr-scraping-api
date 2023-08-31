@@ -5,8 +5,6 @@ Summary: Fiverr API - This Fiverr scrapping API is capable of getting all the in
 Home-page: https://github.com/Bishwas-py/fiverr-scraping-api
 Author: Bishwas Bhandari
 Author-email: bishwasbh@gmail.com
-License: UNKNOWN
-Platform: UNKNOWN
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.6
 Classifier: Programming Language :: Python :: 3.7
@@ -259,4 +257,3 @@ Please make sure to update tests as appropriate.
 
 ## License
 [GPL](https://choosealicense.com/licenses/gpl-3.0/)
-
