@@ -110,7 +110,7 @@ The Fiverr API Scraper is organized into several modules to enhance code readabi
     - `actions.py`: Defines the Actions class responsible for handling HTTP requests.
 
 `scraper.py` gives you a function named `get_perseus_initial_props()` which returns the initial props of
-the Fiverr page. This function is used by the other modules to extract initial `JSON` data from the page, and
+the Fiverr page. This function is used by the modules to extract initial `JSON` data from the page, and
 is also used by `gig_scrape.py` and `profile_scrape.py` to extract data from the page.
 
 ## License
@@ -119,7 +119,7 @@ is also used by `gig_scrape.py` and `profile_scrape.py` to extract data from the
 
 ## Contributing
 
-[Pull requests](https://github.com/Bishwas-py/fiverr-scraping-api) are welcome.
+New [pull requests](https://github.com/Bishwas-py/fiverr-scraping-api) are welcome.
 For major changes, please open an issue first to discuss what you would like to change.
 
 ## Author
