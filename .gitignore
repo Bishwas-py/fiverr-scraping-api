@@ -1,3 +1,4 @@
 venv/
 .idea/
 dist/
+fiverr_api.egg-info/
