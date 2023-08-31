@@ -1,8 +1,13 @@
-# Fiverr API Scraper
-
 Fiverr API Scraper is a Python library that allows you to extract detailed information from Fiverr gig pages and user
 profiles. This tool can be used to programmatically gather data from Fiverr gigs and profiles, facilitating analysis and
 automation of tasks related to Fiverr.
+
+## Features
+
+- Extract detailed information from Fiverr gig pages and user profiles.
+- Dynamic scraping of Fiverr pages, also includes the initial props of the page.
+- Proxy support.
+- Change user-agent or other headers.
 
 ## Installation
 
@@ -65,7 +70,7 @@ actions.set_proxy({
 You can change the user-agent or other headers by setting via `actions.set_headers()`:
 
 ```python
-from fiverr_api.utils.actions import actions  
+from fiverr_api.utils.actions import actions
 
 # Set headers
 actions.set_headers({
