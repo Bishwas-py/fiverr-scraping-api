@@ -2,6 +2,9 @@ Fiverr API Scraper is a Python library that allows you to extract detailed infor
 profiles. This tool can be used to programmatically gather data from Fiverr gigs and profiles, facilitating analysis and
 automation of tasks related to Fiverr.
 
+## Adding:
+- [ScraperAPI](https://www.scraperapi.com/?fp_ref=bishwas33) support being added.
+
 ## Features
 
 - Extract detailed information from Fiverr gig pages and user profiles.
