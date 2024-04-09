@@ -7,16 +7,17 @@ from fiverr_api.utils.scrape_utils import extract_text, extract_list_items, get_
 def profile_scrape(profile_url: str):
     response = actions.request_session.get(profile_url)
     soup = BeautifulSoup(response.text, 'html5lib')
-    user_page_soup = soup.find('div', class_='user-page-perseus')
+    figure_soup = soup.select_one('figure')
+    user_area = figure_soup.select_one('img')
+    user_photo = user_area['src']
+    user_photo_alt = user_area['alt']
+    print(user_photo, user_photo_alt)
 
-    if not user_page_soup:
-        user_page_soup = soup
-
-    user_area = user_page_soup.find('img', class_='profile-pict-img')
-    user_photo = user_area['src'] if user_area else None
+    display_name = soup.select_one('h1[aria-label="Public Name"]').text
+    username = soup.select_one('h1[aria-label="Username"]').text
 
     user_name_soup = user_page_soup.find('b', class_='seller-link')
-    user_name = user_name_soup.string if user_page_soup else '<undetected>'
+    user_name = user_name_soup.string if user_name_soup else '<undetected>'
     user_badge_soup = user_page_soup.find('a', class_='user-badge-round')
     user_level = user_badge_soup['class'][-1] if user_badge_soup else ''
 
@@ -178,6 +179,8 @@ def profile_scrape(profile_url: str):
 
 if __name__ == "__main__":
     import json
+    from env import SCRAPER_API_KEY
 
+    actions.set_scraper_api_key(SCRAPER_API_KEY)
     scrape = profile_scrape('https://www.fiverr.com/bishwasbh')
     print(json.dumps(scrape, indent=4))

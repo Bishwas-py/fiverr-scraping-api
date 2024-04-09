@@ -6,7 +6,7 @@ from fiverr_api.utils.scrape_utils import extract_text, extract_list_items, get_
 
 
 def gig_scrape(gig_url: str):
-    response = actions.request_session.get(gig_url)
+    response = actions.request_session.get(gig_url, params={})
     soup = BeautifulSoup(response.text, 'html5lib')
 
     main_soup = soup.find('div', class_='main')
@@ -32,7 +32,7 @@ def gig_scrape(gig_url: str):
     gig_images_list = gig_gallery_soup.find_all('img', src=True)
     images = [image['src'] for image in gig_images_list]
 
-    about_this_gig_soup = main_soup.find(text=lambda text: text and 'about this gig' in text.lower())
+    about_this_gig_soup = main_soup.find(string=lambda text: text and 'about this gig' in text.lower())
 
     description = extract_text(about_this_gig_soup.next_element if about_this_gig_soup else None)
 
@@ -48,7 +48,7 @@ def gig_scrape(gig_url: str):
     user_name = profile_photo_img_soup['alt'] if profile_photo_img_soup else None
 
     user_stats_soup = seller_card_soup.select('ul.user-stats > li')
-    user_stats = {stat.find(text=True): stat.find('strong').text for stat in user_stats_soup} if user_stats_soup else {}
+    user_stats = {stat.find(string=True): stat.find('strong').text for stat in user_stats_soup} if user_stats_soup else {}
 
     user_description = extract_text(seller_card_soup.find('article', class_='seller-desc'))
     if user_description:
@@ -80,7 +80,9 @@ def gig_scrape(gig_url: str):
 
 if __name__ == "__main__":
     import json
+    from env import SCRAPER_API_KEY
 
+    actions.set_scraper_api_key(SCRAPER_API_KEY)
     scrape = gig_scrape(
-        'https://www.fiverr.com/bishwasbh/do-web-scraping-in-python-with-requests-and-beautifulsoup4')
+        'https://www.fiverr.com/bishwasbh/do-web-scraping-in-python-with-requests-and-beautifulsoup4?gig=1')
     print(json.dumps(scrape, indent=4))

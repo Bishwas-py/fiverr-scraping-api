@@ -4,7 +4,7 @@ from typing import Optional
 import bs4
 
 
-def extract_text(element: bs4.Tag, class_name=None) -> Optional[str | None]:
+def extract_text(element: None | bs4.Tag, class_name=None) -> Optional[str | None]:
     if element:
         if class_name:
             found_element = element.find(class_=class_name)
