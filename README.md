@@ -22,7 +22,7 @@ Below are examples of how to use the Fiverr API Scraper to extract data from Fiv
 ### Scrape Example
 
 ```python
-from fiverr_api.utils.req import session
+from fiverr_api import session
 
 session.set_scraper_api_key("XYZ-SCRAPER_API_KEY")
 response = session.get("https://www.fiverr.com/username/your-gig-slug") # your fiverr url should be here
