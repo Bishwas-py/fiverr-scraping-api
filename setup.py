@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="fiverr-api",
-    version="0.0.9",
+    version="1.0.01",
     description="Fiverr API - Scrape Fiverr gigs, ratings, reviews, prices, profiles, and more.",
     long_description=long_description,
     long_description_content_type="text/markdown",

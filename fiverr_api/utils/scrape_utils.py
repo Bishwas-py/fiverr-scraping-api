@@ -1,24 +1,5 @@
 import json
-from typing import Optional
-
 import bs4
-
-
-def extract_text(element: bs4.Tag, class_name=None) -> Optional[str | None]:
-    if element:
-        if class_name:
-            found_element = element.find(class_=class_name)
-            return found_element.text if found_element else None
-        return element.text
-    return None
-
-
-def extract_list_items(element: bs4.Tag, class_name=None):
-    if element:
-        if class_name:
-            return [item.text for item in element.find_all(class_=class_name)]
-        return [item.text for item in element.find_all('li')]
-    return []
 
 
 def get_perseus_initial_props(soup: bs4.BeautifulSoup):
