@@ -59,12 +59,12 @@ print(profile_data)
 You can use the Fiverr API Scraper with a proxy by setting via `actions.set_proxy()`:
 
 ```python
-from fiverr_api.utils.actions import actions
+from fiverr_api.utils.req import actions
 
 # Set proxy
 actions.set_proxy({
-    "http": "http://username:password@proxy:port",
-    "https": "http://username:password@proxy:port"
+  "http": "http://username:password@proxy:port",
+  "https": "http://username:password@proxy:port"
 })
 ```
 
@@ -73,24 +73,24 @@ actions.set_proxy({
 You can change the user-agent or other headers by setting via `actions.set_headers()`:
 
 ```python
-from fiverr_api.utils.actions import actions
+from fiverr_api.utils.req import actions
 
 # Set headers
 actions.set_headers({
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-                  "(KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,"
-              "image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Cache-Control": "max-age=0",
-    "Connection": "keep-alive",
-    "Host": "www.fiverr.com",
-    "Sec-Fetch-Dest": "document",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-Site": "none",
-    "Sec-Fetch-User": "?1",
-    "Upgrade-Insecure-Requests": "1"
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                "(KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
+  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,"
+            "image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Accept-Language": "en-US,en;q=0.9",
+  "Cache-Control": "max-age=0",
+  "Connection": "keep-alive",
+  "Host": "www.fiverr.com",
+  "Sec-Fetch-Dest": "document",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-Site": "none",
+  "Sec-Fetch-User": "?1",
+  "Upgrade-Insecure-Requests": "1"
 })
 
 # Set user-agent specifically

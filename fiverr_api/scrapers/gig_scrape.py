@@ -1,7 +1,7 @@
 import json
 from bs4 import BeautifulSoup
 
-from fiverr_api.utils.actions import actions
+from fiverr_api.utils.req import actions
 from fiverr_api.utils.scrape_utils import extract_text, extract_list_items, get_perseus_initial_props
 
 
