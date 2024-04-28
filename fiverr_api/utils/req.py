@@ -16,11 +16,14 @@ class Session(requests.Session):
     def request(
             self,
             method,
-            url,
+            url: str = '',
             self_: 'Session' = None,
             *args,
             **kwargs,
     ):
+        if not url.startswith("https://fiverr.com/"):
+            raise ValueError(
+                f"Invalid URL: {url}, must be a Fiverr URL.")
         if self_ is None:
             self_ = self
         if self_.USE_SCRAPER_API and not self_.SCRAPER_API_KEY:
