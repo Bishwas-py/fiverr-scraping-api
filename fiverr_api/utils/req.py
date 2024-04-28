@@ -1,9 +1,7 @@
-import json
 import re
 
 import requests
 from bs4 import BeautifulSoup
-from requests import Response
 
 from fiverr_api.utils.scrape_utils import get_perseus_initial_props
 
@@ -12,9 +10,7 @@ SCRAPER_API_REF = "https://www.scraperapi.com/?fp_ref=enable-fiverr-api"
 
 
 class Response(requests.Response):
-    def __init__(self):
-        self.soup: 'BeautifulSoup' = None
-        super().__init__()
+    soup: 'BeautifulSoup'
 
     def set_soup(self):
         self.soup = BeautifulSoup(self.text, 'html5lib')

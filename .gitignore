@@ -3,3 +3,4 @@ venv/
 dist/
 fiverr_api.egg-info/
 env.py
+fiverr_api/scrapers
