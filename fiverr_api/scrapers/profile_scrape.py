@@ -1,9 +1,10 @@
-from fiverr_api.utils.req import session
+from fiverr_api.utils.req import session, Response
 
 
 def profile_scrape(profile_url: str):
-    response = session.get(profile_url)
+    response: Response = session.get("https://www.fiverr.com/bishwasbh/deploy-django-in-cpanel-server")
     js_main_content = response.props_json()
+    print(response.soup)
     print("js_main_content", json.dumps(js_main_content, indent=4))
 
 

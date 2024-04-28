@@ -47,7 +47,8 @@ class Session(requests.Session):
             self_ = self
         if self_.USE_SCRAPER_API and not self_.SCRAPER_API_KEY:
             raise ValueError(
-                f"No Scraper API key found, please get one from {SCRAPER_API_REF}, and use `set_scraper_api_key(` to set it.")
+                f"No Scraper API key found, please get one from {SCRAPER_API_REF}, and "
+                f"use `set_scraper_api_key(` to set it.")
         if self_.SCRAPER_API_KEY and self_.USE_SCRAPER_API:
             kwargs["params"] = {
                 "api_key": self_.SCRAPER_API_KEY,
@@ -64,6 +65,9 @@ class Session(requests.Session):
 
     def set_scraper_api_key(self, api_key: str):
         self.SCRAPER_API_KEY = api_key
+
+    def set_session_number(self, session_number: int):
+        self.session_number = session_number
 
 
 session = Session()
