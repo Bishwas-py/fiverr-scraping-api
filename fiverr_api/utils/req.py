@@ -1,7 +1,26 @@
+import json
+import re
+
 import requests
+from bs4 import BeautifulSoup
+from requests import Response
+
+from fiverr_api.utils.scrape_utils import get_perseus_initial_props
 
 SCRAPER_API_URL = "https://api.scraperapi.com/"
 SCRAPER_API_REF = "https://www.scraperapi.com/?fp_ref=enable-fiverr-api"
+
+
+class Response(requests.Response):
+    def __init__(self):
+        self.soup: 'BeautifulSoup' = None
+        super().__init__()
+
+    def set_soup(self):
+        self.soup = BeautifulSoup(self.text, 'html5lib')
+
+    def props_json(self) -> dict:
+        return get_perseus_initial_props(self.soup)
 
 
 class Session(requests.Session):
@@ -20,8 +39,8 @@ class Session(requests.Session):
             self_: 'Session' = None,
             *args,
             **kwargs,
-    ):
-        if not url.startswith("https://fiverr.com/"):
+    ) -> Response:
+        if not re.match(r"https://(www\.)?fiverr\.com/", url):
             raise ValueError(
                 f"Invalid URL: {url}, must be a Fiverr URL.")
         if self_ is None:
@@ -38,7 +57,10 @@ class Session(requests.Session):
                 "session_number": self_.session_number,
             }
             url = SCRAPER_API_URL
-        return super().request(method, url, *args, **kwargs)
+        response = super().request(method, url, *args, **kwargs)
+        response.__class__ = Response
+        response.set_soup()
+        return response
 
     def set_scraper_api_key(self, api_key: str):
         self.SCRAPER_API_KEY = api_key
