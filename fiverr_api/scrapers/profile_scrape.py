@@ -1,5 +1,3 @@
-import json
-from bs4 import BeautifulSoup
 from fiverr_api.utils.req import session
 
 
