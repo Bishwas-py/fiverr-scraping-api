@@ -25,7 +25,7 @@ Below are examples of how to use the Fiverr API Scraper to extract data from Fiv
 from fiverr_api.utils.req import session
 
 session.set_scraper_api_key("XYZ-SCRAPER_API_KEY")
-response = session.get("https://www.fiverr.com/username/your-gig-slug")
+response = session.get("https://www.fiverr.com/username/your-gig-slug") # your fiverr url should be here
 json_data = response.props_json() # gives you JSON
 print(response.soup) # gives you beautiful soup instance
 # You can use `response.soup` to further extract your information. 
